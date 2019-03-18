@@ -1,0 +1,67 @@
+{{#square-payment-form
+  applicationId=this.applicationId
+  class="square-payment-form--styled"
+  createPaymentRequest=(if this.createPaymentRequest this.createPaymentRequest (action "doNothing"))
+  inputClass=(concat "square-payment-form--styled--" this.style "__input")
+  inputStyles=this.styledFormInputStyles
+  locationId=this.locationId
+  onCardNonceResponseReceived=this.onCardNonceResponseReceived
+  shippingContactChanged=this.shippingContactChanged
+  shippingOptionChanged=this.shippingOptionChanged
+  as |PaymentForm|
+}}
+  {{PaymentForm.ApplePayButton
+    class=(concat "square-payment-form--styled__button " (if this.acceptApplePay "" "square-payment-form-element--hidden"))
+    style=(if isStyleLight "black" "white")
+  }}
+
+  {{PaymentForm.GooglePayButton
+    class=(concat "square-payment-form--styled__button " (if this.acceptGooglePay "" "square-payment-form-element--hidden"))
+    style=(if this.isStyleLight "black" "white")
+  }}
+
+  {{PaymentForm.MasterpassButton
+    class=(concat "square-payment-form--styled__button " (if this.acceptMasterpass "" "square-payment-form-element--hidden"))
+  }}
+
+  <div class="square-payment-form--styled__divider square-payment-form--styled__divider--{{this.style}} {{if (if this.acceptDigitalWallets PaymentForm.canShowDigitalWallets) "" "square-payment-form-element--hidden"}}">
+    <span class="square-payment-form--styled__divider__text square-payment-form--styled__divider__text--{{this.style}}">
+      {{this.digitalWalletsDividerText}}
+    </span>
+  </div>
+
+  {{#if acceptCreditCards}}
+    {{#PaymentForm.CreditCardFields
+      class="square-payment-form--styled__form-fields"
+      as |Fields|
+    }}
+      <div class="square-payment-form--styled__form-field">
+        <label class="square-payment-form--styled__label square-payment-form--styled__label--{{this.style}}">
+          Card Number
+        </label>
+        {{Fields.NumberInput class="square-payment-form__form-field__input--number"}}
+      </div>
+      <div class="square-payment-form--styled__form-field square-payment-form--styled__form-field--third">
+        <label class="square-payment-form--styled__label square-payment-form--styled__label--{{this.style}}">
+          Expiration
+        </label>
+        {{Fields.ExpirationDateInput}}
+      </div>
+      <div class="square-payment-form--styled__form-field square-payment-form--styled__form-field--third">
+        <label class="square-payment-form--styled__label square-payment-form--styled__label--{{this.style}}">
+          CVV
+        </label>
+        {{Fields.CvvInput}}
+      </div>
+      <div class="square-payment-form--styled__form-field square-payment-form--styled__form-field--third">
+        <label class="square-payment-form--styled__label square-payment-form--styled__label--{{this.style}}">
+          Postal
+        </label>
+        {{Fields.PostalCodeInput}}
+      </div>
+      <button class="square-payment-form--styled__button square-payment-form--styled__button--charge" onclick={{PaymentForm.requestCardNonce}}>
+        {{this.creditCardPayButtonText}}
+      </button>
+    {{/PaymentForm.CreditCardFields}}
+  {{/if}}
+{{/square-payment-form}}

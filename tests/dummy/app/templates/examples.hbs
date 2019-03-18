@@ -1,0 +1,16 @@
+{{#docs-viewer as |viewer|}}
+  {{#viewer.nav as |nav|}}
+    {{nav.item "Examples" "examples.index"}}
+    {{nav.item "Styled Form (Light)" "examples.light"}}
+    {{nav.item "Styled Form (Dark)" "examples.dark"}}
+    {{nav.item "Unstyled Form" "examples.unstyled"}}
+  {{/viewer.nav}}
+
+  {{#viewer.main}}
+    <div class="docs-container">
+      <div class="docs-section">
+        {{outlet}}
+      </div>
+    </div>
+  {{/viewer.main}}
+{{/docs-viewer}}

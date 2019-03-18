@@ -1,0 +1,29 @@
+{{yield
+  (hash
+    ApplePayButton=(
+      component "square-payment-form-apple-pay-button"
+      formId=this.formId
+      isSupported=this.canShowApplePay
+    )
+    CreditCardFields=(
+      component "square-payment-form-credit-card-fields"
+      formId=this.formId
+    )
+    GooglePayButton=(
+      component "square-payment-form-google-pay-button"
+      formId=this.formId
+      isSupported=this.canShowGooglePay
+    )
+    MasterpassButton=(
+      component "square-payment-form-masterpass-button"
+      formId=this.formId
+      isSupported=this.canShowMasterpass
+    )
+
+    canShowApplePay=this.canShowApplePay
+    canShowDigitalWallets=this.canShowDigitalWallets
+    canShowGooglePay=this.canShowGooglePay
+    canShowMasterpass=this.canShowMasterpass
+    requestCardNonce=(action "requestCardNonce")
+  )
+}}

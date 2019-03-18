@@ -1,0 +1,40 @@
+.docs-h1 {
+  font-size: 2.2rem;
+  word-wrap: break-word;
+}
+
+table {
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+table th, table td {
+  border: 1px solid #E0E2E3;
+  padding: 8px 16px;
+}
+
+.docs-md__code {
+  margin-top: 16px;
+}
+
+.form-wrapper {
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid #373F4A;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  margin: 24px 0;
+  padding: 32px;
+  width: 100%;
+}
+
+.form-wrapper + .docs-bg-code-base {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-top: -28px;
+}
+
+.form-wrapper--dark {
+  background: #373F4A;
+}

@@ -1,0 +1,295 @@
+/* Global Helpers */
+.square-payment-form-element--hidden {
+  display: none !important;
+}
+
+/* Apple Pay Button */
+
+.square-payment-form__apple-pay-button {
+  -webkit-appearance: -apple-pay-button;
+  border-radius: 6px;
+  height: 48px;
+  width: 300px;
+}
+
+.square-payment-form__apple-pay-button--style-black {
+  -apple-pay-button-style: black;
+}
+
+.square-payment-form__apple-pay-button--style-white {
+  -apple-pay-button-style: white;
+}
+
+.square-payment-form__apple-pay-button--style-white-outline {
+  -apple-pay-button-style: white-outline;
+}
+
+.square-payment-form__apple-pay-button--type-buy {
+  -apple-pay-button-type: buy;
+}
+
+.square-payment-form__apple-pay-button--type-donate {
+  -apple-pay-button-type: donate;
+}
+
+.square-payment-form__apple-pay-button--type-check-out {
+  -apple-pay-button-type: check-out;
+}
+
+.square-payment-form__apple-pay-button--type-book {
+  -apple-pay-button-type: book;
+}
+
+.square-payment-form__apple-pay-button--type-subscribe {
+  -apple-pay-button-type: subscribe;
+}
+
+/* Google Pay Button */
+
+.square-payment-form__google-pay-button {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto 22px;
+  border-radius: 6px;
+  min-height: 48px;
+  min-width: 300px;
+}
+
+.square-payment-form__google-pay-button--style-black {
+  background-color: black;
+}
+
+.square-payment-form__google-pay-button--style-white {
+  background-color: white;
+}
+
+.square-payment-form__google-pay-button--style-black.square-payment-form__google-pay-button--type-short {
+  background-image: url(/assets/square-payment-form-images/google-pay-black-icon.svg);
+}
+
+.square-payment-form__google-pay-button--style-white.square-payment-form__google-pay-button--type-short {
+  background-image: url(/assets/square-payment-form-images/google-pay-white-icon.svg);
+}
+
+.square-payment-form__google-pay-button--style-black.square-payment-form__google-pay-button--type-long.square-payment-form__google-pay-button--lang-en {
+  background-image: url(/assets/square-payment-form-images/google-pay-black-en.svg);
+}
+
+.square-payment-form__google-pay-button--style-black.square-payment-form__google-pay-button--type-long.square-payment-form__google-pay-button--lang-es {
+  background-image: url(/assets/square-payment-form-images/google-pay-black-es.svg);
+}
+
+.square-payment-form__google-pay-button--style-black.square-payment-form__google-pay-button--type-long.square-payment-form__google-pay-button--lang-fr {
+  background-image: url(/assets/square-payment-form-images/google-pay-black-fr.svg);
+}
+
+.square-payment-form__google-pay-button--style-black.square-payment-form__google-pay-button--type-long.square-payment-form__google-pay-button--lang-ja {
+  background-image: url(/assets/square-payment-form-images/google-pay-black-ja.svg);
+}
+
+.square-payment-form__google-pay-button--style-white.square-payment-form__google-pay-button--type-long.square-payment-form__google-pay-button--lang-en {
+  background-image: url(/assets/square-payment-form-images/google-pay-white-en.svg);
+}
+
+.square-payment-form__google-pay-button--style-white.square-payment-form__google-pay-button--type-long.square-payment-form__google-pay-button--lang-es {
+  background-image: url(/assets/square-payment-form-images/google-pay-white-es.svg);
+}
+
+.square-payment-form__google-pay-button--style-white.square-payment-form__google-pay-button--type-long.square-payment-form__google-pay-button--lang-fr {
+  background-image: url(/assets/square-payment-form-images/google-pay-white-fr.svg);
+}
+
+.square-payment-form__google-pay-button--style-white.square-payment-form__google-pay-button--type-long.square-payment-form__google-pay-button--lang-ja {
+  background-image: url(/assets/square-payment-form-images/google-pay-white-ja.svg);
+}
+
+/* Masterpass Button */
+
+.square-payment-form__masterpass-button {
+  align-items: stretch;
+  background-color: black;
+  background-repeat: no-repeat;
+  background-image: url(https://masterpass.com/dyn/img/btn/global/mp_chk_btn_290x048px.svg);
+  background-position: right center;
+  background-size: contain;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  padding: 12px 32px 12px 24px;
+  position: relative;
+  min-height: 48px;
+  min-width: 300px;
+}
+
+.square-payment-form__masterpass-button:before, .square-payment-form__masterpass-button::before {
+  background-color: black;
+  background-image: url(https://masterpass.com/dyn/img/acc/global/mp_mark_hor_wht.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  bottom: 12px;
+  content: '';
+  left: 12px;
+  position: absolute;
+  right: 32px;
+  top: 12px;
+  z-index: 1;
+}
+
+.square-payment-form__masterpass-button:after, .square-payment-form__masterpass-button::after {
+  background-color: black;
+  background-position: center;
+  background-size: contain;
+  bottom: 0;
+  content: '';
+  left: 0;
+  position: absolute;
+  right: 32px;
+  top: 0;
+  z-index: 0;
+}
+
+/* General Styled Form */
+
+.square-payment-form--styled {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  max-width: 380px;
+}
+
+.square-payment-form--styled__button {
+  margin: 8px 0;
+  width: 100%;
+}
+
+.square-payment-form--styled__divider {
+  align-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 14px;
+  font-weight: 600;
+  height: 24px;
+  letter-spacing: 0.5px;
+  margin: 24px 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.square-payment-form--styled__divider__text {
+  flex: 0 0 auto;
+  margin: 0 24px;
+}
+
+.square-payment-form--styled__divider__text--dark {
+  color: #8594A7;
+}
+
+.square-payment-form--styled__divider__text--light {
+  color: #cccccc;
+}
+
+.square-payment-form--styled__divider:after,
+.square-payment-form--styled__divider::after,
+.square-payment-form--styled__divider:before,
+.square-payment-form--styled__divider::before {
+  content: '';
+  display: block;
+  flex: 1 1 15px;
+  height: 1px;
+}
+
+.square-payment-form--styled__divider--dark:after,
+.square-payment-form--styled__divider--dark::after,
+.square-payment-form--styled__divider--dark:before,
+.square-payment-form--styled__divider--dark::before {
+  background-color: #5C6B7D;
+}
+
+.square-payment-form--styled__divider--light:after,
+.square-payment-form--styled__divider--light::after,
+.square-payment-form--styled__divider--light:before,
+.square-payment-form--styled__divider--light::before {
+  background-color: #E0E2E3;
+}
+
+/* Styled Credit Card Form */
+
+.square-payment-form--styled__button--charge {
+  background-color: #4A90E2;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 19px;
+  margin: 16px 8px 24px;
+  padding: 16px;
+  width: calc(100% - 16px);
+}
+
+.square-payment-form--styled__form-fields {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 24px -8px 0;
+  max-width: calc(100% + 16px);
+}
+
+.square-payment-form--styled__form-field {
+  flex: 1 0 calc(100% - 16px);
+  margin: 8px;
+}
+
+.square-payment-form--styled__form-field:first-child {
+  margin-top: 0;
+}
+
+.square-payment-form--styled__form-field--third {
+  flex: 1 0 calc(33% - 16px);
+}
+
+.square-payment-form--styled__label {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  height: 24px;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.square-payment-form--styled__label--light {
+  color: #373F4A;
+}
+
+.square-payment-form--styled__label--dark {
+  color: #8594A7;
+}
+
+.square-payment-form--styled--dark__input, .square-payment-form--styled--light__input {
+  border: 1px solid;
+  box-sizing: border-box;
+  border-radius: 4px;
+  height: 56px;
+}
+
+.square-payment-form--styled--dark__input {
+  background: #212730;
+  border-color: #495563;
+}
+
+.square-payment-form--styled--dark__input--focus {
+  background-color: #2C3440;
+  border-color: #4A90E2;
+}
+
+.square-payment-form--styled--light__input {
+  background: #ffffff;
+  border-color: #cccccc;
+}
+
+.square-payment-form--styled--light__input--focus {
+  background-color: rgba(74, 144, 226, 0.02);
+  border-color: #4A90E2;
+}
