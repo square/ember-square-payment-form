@@ -1,0 +1,15 @@
+{{#docs-viewer as |viewer|}}
+  {{#viewer.nav as |nav|}}
+    {{nav.item "Introduction" "docs.index"}}
+    {{nav.item "Get Started" "docs.get-started"}}
+    {{nav.item "Digital Wallets" "docs.digital-wallets"}}
+  {{/viewer.nav}}
+
+  {{#viewer.main}}
+    <div class="docs-container">
+      <div class="docs-section">
+        {{outlet}}
+      </div>
+    </div>
+  {{/viewer.main}}
+{{/docs-viewer}}
