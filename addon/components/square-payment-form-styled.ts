@@ -600,6 +600,8 @@ export default class SquarePaymentFormStyled extends Component {
 
   // ADDON INTERNALS
 
+  env?: string;
+
   /**
    * Boolean computed property that checks if the style property is set to "light".
    * @private

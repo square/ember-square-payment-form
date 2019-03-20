@@ -2,6 +2,7 @@
   applicationId=this.applicationId
   class="square-payment-form--styled"
   createPaymentRequest=(if this.createPaymentRequest this.createPaymentRequest (action "doNothing"))
+  env=env
   inputClass=(concat "square-payment-form--styled--" this.style "__input")
   inputStyles=this.styledFormInputStyles
   locationId=this.locationId

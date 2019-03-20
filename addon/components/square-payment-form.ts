@@ -552,6 +552,8 @@ export default class SquarePaymentForm extends Component {
 
   // COMPONENT INTERNALS
 
+  env?: string;
+
   /**
    * Used to determine if Apple Pay is supported in the current environment.
    * @private
@@ -663,6 +665,7 @@ export default class SquarePaymentForm extends Component {
     const paymentFormConfig: SqPaymentFormConfiguration = {
       applicationId: this.applicationId,
       autoBuild: false,
+      environment: this.env,
       inputClass: this.inputClass,
       inputStyles: this.inputStyles,
       locationId: this.locationId,
