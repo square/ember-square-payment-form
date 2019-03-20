@@ -661,11 +661,12 @@ export default class SquarePaymentForm extends Component {
     // If there is an existing form (possibly due to runloop effects),
     // tear it down and clear the current state.
     this.teardownPaymentForm();
+    console.log(this.env)
 
     const paymentFormConfig: SqPaymentFormConfiguration = {
       applicationId: this.applicationId,
       autoBuild: false,
-      environment: this.env,
+      env: this.env,
       inputClass: this.inputClass,
       inputStyles: this.inputStyles,
       locationId: this.locationId,

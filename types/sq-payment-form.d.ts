@@ -57,7 +57,7 @@ interface SqPaymentFormConfiguration {
   callbacks: SqPaymentFormCallbacks
   cardNumber?: SqPaymentFormElement
   cvv?: SqPaymentFormElement
-  environment?: string
+  env?: string
   expirationDate?: SqPaymentFormElement
   googlePay?: SqPaymentFormElement
   inputClass: string

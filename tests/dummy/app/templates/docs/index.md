@@ -9,8 +9,9 @@ leave feedback for our team!*
 <div class="form-wrapper">
   {{square-payment-form-styled
     acceptCreditCards=true
-    applicationId="square-app-id"
-    locationId="square-location-id"
+    applicationId="sq0ids-YzLuoHQTx2dpLHCXxLnIow"
+    locationId="KCSEVKARW3PWD"
+    env="staging"
     onCardNonceResponseReceived=(action (mut response))
   }}
 </div>

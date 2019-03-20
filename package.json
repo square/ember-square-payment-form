@@ -1,6 +1,6 @@
 {
   "name": "ember-square-payment-form",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Take payments with Square securely and easily in your Ember app",
   "keywords": [
     "ember-addon"
