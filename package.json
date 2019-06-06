@@ -18,11 +18,11 @@
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
-    "test:all": "ember try:each",
-    "prepublishOnly": "ember ts:precompile",
-    "postpublish": "ember ts:clean"
+    "test:all": "ember try:each"
   },
   "dependencies": {
+    "broccoli-funnel": "^2.0.0",
+    "broccoli-merge-trees": "^3.0.0",
     "ember-cli-babel": "^7.0.0",
     "ember-cli-htmlbars": "^3.0.0"
   },
