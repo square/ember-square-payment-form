@@ -5,7 +5,7 @@ const join = require('path').join;
 
 module.exports = {
   name: require('./package').name,
-  contentFor(type, config) {
+  contentFor(type) {
     if (type === 'head') {
       return '<script type="text/javascript" src="https://js.squareup.com/v2/paymentform"></script>';
     }
