@@ -1,6 +1,5 @@
 import Component from '@ember/component';
-import { tagName, attribute, className, classNames } from '@ember-decorators/component';
-import { computed } from '@ember-decorators/object';
+import { computed } from '@ember/object';
 
 const ROOT_CLASS_NAME = 'square-payment-form__google-pay-button';
 
@@ -8,30 +7,30 @@ const ROOT_CLASS_NAME = 'square-payment-form__google-pay-button';
  * Different color styles for the Google Pay button, per Google's documentation at
  * https://developers.google.com/pay/api/web/reference/object#ButtonOptions
  */
-enum GooglePayLanguages {
-  en = 'en',
-  es = 'es',
-  fr = 'fr',
-  ja = 'ja'
-}
+export const GooglePayLanguages = {
+  en: 'en',
+  es: 'es',
+  fr: 'fr',
+  ja: 'ja'
+};
 
 /**
  * Different color styles for the Google Pay button, per Google's documentation at
  * https://developers.google.com/pay/api/web/reference/object#ButtonOptions
  */
-enum GooglePayStyles {
-  black = 'black',
-  white = 'white'
-}
+export const GooglePayStyles = {
+  black: 'black',
+  white: 'white'
+};
 
 /**
  * Different button types for the Google Pay button, per Google's documentation at
  * https://developers.google.com/pay/api/web/reference/object#ButtonOptions
  */
-enum GooglePayTypes {
-  long = 'long',
-  short = 'short'
-}
+export const GooglePayTypes = {
+  long: 'long',
+  short: 'short'
+};
 
 /**
  * Renders a Google Pay button for use in the Square Payment Form, pre-styled to meet
@@ -45,31 +44,36 @@ enum GooglePayTypes {
  * you can use the `PaymentForm.canShowGooglePay` property in your template, like so:
  *
  * ```hbs
- * <SquarePaymentForm as |PaymentForm|>
- *   <PaymentForm.GooglePayButton/>
- *
- *   {{#unless PaymentForm.canShowGooglePay}}
- *     <p>Google Pay is not available here.</p>
- *   {{/unless}}
- * </SquarePaymentForm>
- *
- * {{!-- or, if you're using < Ember 3.4 --}}
- *
  * {{#square-payment-form as |PaymentForm|}}
  *   {{PaymentForm.GooglePayButton}}
  *
  *   {{#unless PaymentForm.canShowGooglePay}}
- *     <p>Google Pay is not available here.</p>
+ *     <p>Google Pay is not available here.</p>
  *   {{/unless}}
  * {{/square-payment-form}}
  * ```
  *
  * *Note: you'll need to configure the SquarePaymentForm to implement Google Pay;*
  * *you can read more in the digital wallets guide.*
+ *
+ * @class SquarePaymentFormGooglePayButton
  */
-@classNames(ROOT_CLASS_NAME)
-@tagName('button')
-export default class SquarePaymentFormGooglePayButton extends Component {
+export default Component.extend({
+  attributeBindings: [
+    'uniqueGooglePayId:id',
+    'label:aria-label'
+  ],
+  classNames: [
+    ROOT_CLASS_NAME
+  ],
+  classNameBindings: [
+    'googlePayLangClass',
+    'googlePayStyleClass',
+    'googlePayTypeClass',
+    'isSupported::square-payment-form-element--hidden'
+  ],
+  tagName: 'button',
+
   /**
    * HTML language code to set on the button.
    *
@@ -86,20 +90,17 @@ export default class SquarePaymentFormGooglePayButton extends Component {
    *
    * **Example: Render a Google Pay button in French for Canadians**
    * ```hbs
-   * <SquarePaymentForm as |PaymentForm|>
-   *   <PaymentForm.GooglePayButton @lang="fr"/>
-   * <SquarePaymentForm/>
-   *
-   * {{!-- or, if you're using < Ember 3.4 --}}
-   *
    * {{#square-payment-form as |PaymentForm|}}
    *   {{PaymentForm.GooglePayButton lang="fr"}}
    * {{/square-payment-form}}
    * ```
    * *Note: you'll need to configure the SquarePaymentForm to implement Google Pay;*
    * *you can read more in the digital wallets guide.*
+   *
+   * @argument lang
+   * @type String
    */
-  lang = GooglePayLanguages.en;
+  lang: GooglePayLanguages.en,
 
   /**
    * Color style for the Google Pay button.
@@ -115,20 +116,17 @@ export default class SquarePaymentFormGooglePayButton extends Component {
    *
    * **Example: Render a white Google Pay button with black text**
    * ```hbs
-   * <SquarePaymentForm as |PaymentForm|>
-   *   <PaymentForm.GooglePayButton @style="white"/>
-   * <SquarePaymentForm/>
-   *
-   * {{!-- or, if you're using < Ember 3.4 --}}
-   *
    * {{#square-payment-form as |PaymentForm|}}
    *   {{PaymentForm.GooglePayButton style="white"}}
    * {{/square-payment-form}}
    * ```
    * *Note: you'll need to configure the SquarePaymentForm to implement Google Pay;*
    * *you can read more in the digital wallets guide.*
+   *
+   * @argument style
+   * @type String
    */
-  style = GooglePayStyles.black;
+  style: GooglePayStyles.black,
 
   /**
    * Button type for the Google Pay button; determines whether or not to show text alongside
@@ -145,20 +143,17 @@ export default class SquarePaymentFormGooglePayButton extends Component {
    *
    * **Example: Render a button with both text and Google Pay logo**
    * ```hbs
-   * <SquarePaymentForm as |PaymentForm|>
-   *   <PaymentForm.GooglePayButton @type="long"/>
-   * <SquarePaymentForm/>
-   *
-   * {{!-- or, if you're using < Ember 3.4 --}}
-   *
    * {{#square-payment-form as |PaymentForm|}}
    *   {{PaymentForm.GooglePayButton type="long"}}
    * {{/square-payment-form}}
    * ```
    * *Note: you'll need to configure the SquarePaymentForm to implement Google Pay;*
    * *you can read more in the digital wallets guide.*
+   *
+   * @argument type
+   * @type String
    */
-  type = GooglePayTypes.short;
+  type: GooglePayTypes.short,
 
   // ADDON INTERNALS
 
@@ -166,59 +161,51 @@ export default class SquarePaymentFormGooglePayButton extends Component {
    * Adds an ARIA label to describe the button since there's no text for a screenreader to use.
    * @private
    */
-  @attribute('aria-label') label = 'Pay with Google Pay';
+  label: 'Pay with Google Pay',
 
   /**
    * Generates a BEM-compliant CSS class to hide Google Pay when it's not supported.
    * @private
    */
-  @className('', 'square-payment-form-element--hidden') isSupported = false;
+  isSupported: false,
 
   /**
    * Generates a BEM-compliant CSS class derived from the lang property.
    * @private
    */
-  @className()
-  @computed('lang')
-  get googlePayLangClass() {
+  googlePayLangClass: computed('lang', function() {
     return `${ROOT_CLASS_NAME}--lang-${this.lang}`;
-  }
+  }),
 
   /**
    * Generates a BEM-compliant CSS class derived from the style property.
    * @private
    */
-  @className()
-  @computed('style')
-  get googlePayStyleClass() {
+  googlePayStyleClass: computed('style', function() {
     return `${ROOT_CLASS_NAME}--style-${this.style}`;
-  }
+  }),
 
   /**
    * Generates a BEM-compliant CSS class derived from the type property.
    * @private
    */
-  @className()
-  @computed('type')
-  get googlePayTypeClass() {
+  googlePayTypeClass: computed('type', function() {
     return `${ROOT_CLASS_NAME}--type-${this.type}`;
-  }
+  }),
 
   /**
    * ID generated by the parent Payment Form component used to generate a reference to an
    * instance of this button.
    * @private
    */
-  formId!: string;
+  formId: null,
 
   /**
    * Generated HTML ID referenced by the parent Payment Form component to reference an
    * instance of this button.
    * @private
    */
-  @attribute('id')
-  @computed('formId')
-  get uniqueGooglePayId() {
+  uniqueGooglePayId: computed('formId', function() {
     return `sq-${this.formId}-google-pay-button`;
-  }
-};
+  })
+});

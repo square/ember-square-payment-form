@@ -1,8 +1,5 @@
 import Component from '@ember/component';
-import { layout } from '@ember-decorators/component';
-import { computed } from '@ember-decorators/object';
-
-// @ts-ignore: Ignore import of compiled template
+import { computed } from '@ember/object';
 import template from '../templates/components/square-payment-form-credit-card-number-input';
 
 const DEFAULT_PLACEHOLDER = '• • • •  • • • •  • • • •  • • • •';
@@ -18,23 +15,18 @@ const DEFAULT_PLACEHOLDER = '• • • •  • • • •  • • • •  
  *
  * **Example: Render a credit card number input inside the payment form**
  * ```hbs
- * <SquarePaymentForm as |PaymentForm|>
- *   <PaymentForm.CreditCardFields as |Fields|>
- *     <Fields.NumberInput/>
- *   </PaymentForm.CreditCardFields>
- * </SquarePaymentForm>
- *
- * {{!-- or, if you're using < Ember 3.4 --}}
- *
  * {{#square-payment-form as |PaymentForm|}}
  *   {{#PaymentForm.CreditCardFields as |Fields|}}
  *     {{Fields.NumberInput}}
  *   {{/PaymentForm.CreditCardFields}}
  * {{/square-payment-form}}
  * ```
+ *
+ * @class SquarePaymentFormCreditCardNumberInput
  */
-@layout(template)
-export default class SquarePaymentFormCreditCardNumberInput extends Component {
+export default Component.extend({
+  layout: template,
+
   /**
    * Greyed-out string that shows up in the credit card number input field before a customer
    * begins typing in their credit card number.
@@ -44,17 +36,6 @@ export default class SquarePaymentFormCreditCardNumberInput extends Component {
    * **Example: Replace the Default Placeholder**
    *
    * ```hbs
-   * <SquarePaymentForm as |PaymentForm|>
-   *   <PaymentForm.CreditCardFields as |Fields|>
-   *     <div>
-   *       <label>Credit Card Number</label>
-   *       <Fields.NumberInput @placeholder="Credit Card Number"/>
-   *     </div>
-   *   </PaymentForm.CreditCardFields/>
-   * </SquarePaymentForm>>
-   *
-   * {{!-- or, if you're using < Ember 3.4 --}}
-   *
    * {{#square-payment-form as |PaymentForm|}}
    *   {{#PaymentForm.CreditCardFields as |Fields|}}
    *     <div>
@@ -64,9 +45,12 @@ export default class SquarePaymentFormCreditCardNumberInput extends Component {
    *   {{/PaymentForm.CreditCardFields}}
    * {{/square-payment-form}}
    * ```
+   *
+   * @argument placeholder
+   * @type String
    */
 
-  placeholder?: string;
+  placeholder: null,
 
   /**
    * Passed down unique identifier for the current Square Payment Form; used to prevent
@@ -74,25 +58,23 @@ export default class SquarePaymentFormCreditCardNumberInput extends Component {
    * DOM IDs.
    * @private
    */
-  formId!: string;
+  formId: null,
 
   /**
    * Renders the placeholder property to a data attribute so the parent component can
    * inject it into the SqPaymentForm build cycle.
    * @private
    */
-  @computed('placeholder')
-  get placeholderAttribute() {
+  placeholderAttribute: computed('placeholder', function() {
     return this.placeholder || DEFAULT_PLACEHOLDER;
-  }
+  }),
 
   /**
    * Generated HTML ID referenced by the parent Payment Form component to reference an
    * instance of this input.
    * @private
    */
-  @computed('formId')
-  get uniqueCcInputId() {
+  uniqueCcInputId: computed('formId', function() {
     return `sq-${this.formId}-credit-card-number-input`;
-  }
-};
+  })
+});

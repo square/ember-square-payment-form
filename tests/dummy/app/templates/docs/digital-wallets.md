@@ -45,17 +45,6 @@ Here's our finished `payment-page.hbs` template file from the guide:
 ```hbs
 <h3>Thank you for choosing Square's coffee house!</h3>
 <p>Your total is <b>{{this.total}}</b>.</p>
-<SquarePaymentFormStyled
-  @acceptCreditCards={{true}}
-  @applicationId="my-app-id"
-  @locationId="my-location-id"
-  @onCardNonceResponseReceived={{action "handleCardNonceResponse"}}
-></SquarePaymentFormStyled>
-
-{{!-- or, if you're on < Ember 3.4 --}}
-
-<h3>Thank you for choosing Square's coffee house!</h3>
-<p>Your total is <b>{{this.total}}</b>.</p>
 {{square-payment-form-styled
   acceptCreditCards=true
   applicationId="my-app-id"
@@ -144,18 +133,6 @@ Let's turn on Google Pay by adding the `acceptGooglePay` property below:
 ```hbs
 <h3>Thank you for choosing Square's coffee house!</h3>
 <p>Your total is <b>{{this.total}}</b>.</p>
-<SquarePaymentFormStyled
-  @acceptCreditCards={{true}}
-  @acceptGooglePay={{true}}
-  @applicationId="my-app-id"
-  @locationId="my-location-id"
-  @onCardNonceResponseReceived={{action "handleCardNonceResponse"}}
-></SquarePaymentFormStyled>
-
-{{!-- or, if you're on < Ember 3.4 --}}
-
-<h3>Thank you for choosing Square's coffee house!</h3>
-<p>Your total is <b>{{this.total}}</b>.</p>
 {{square-payment-form-styled
   acceptCreditCards=true
   acceptGooglePay=true
@@ -184,18 +161,6 @@ Each of them render a button for the digital wallet they're named after. Here's 
 the template for Google Pay, for example:
 
 ```hbs
-<SquarePaymentForm
-  @applicationId="my-app-id"
-  @locationId="my-location-id"
-  @createPaymentRequest={{action "handleCreatePaymentRequest"}}
-  @onCardNonceResponseReceived={{action "handleCardNonceResponseReceived"}}
-  as |PaymentForm|
->
-  <PaymentForm.GooglePayButton/>
-</SquarePaymentForm>
-
-{{!-- Or, for < Ember 3.4 --}}
-
 {{#square-payment-form
   applicationId="my-app-id"
   locationId="my-location-id"

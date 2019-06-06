@@ -84,17 +84,6 @@ so we can get a nicely styled form out-of-the-box.
 ```hbs
 <h3>Thank you for choosing Square's coffee house!</h3>
 <p>Your total is <b>{{this.total}}</b>.</p>
-<SquarePaymentFormStyled
-  @acceptCreditCards={{true}}
-  @applicationId="my-app-id"
-  @locationId="my-location-id"
-  @onCardNonceResponseReceived={{action "handleCardNonceResponse"}}
-></SquarePaymentFormStyled>
-
-{{!-- or, if you're on < Ember 3.4 --}}
-
-<h3>Thank you for choosing Square's coffee house!</h3>
-<p>Your total is <b>{{this.total}}</b>.</p>
 {{square-payment-form-styled
   acceptCreditCards=true
   applicationId="my-app-id"

@@ -1,18 +1,15 @@
 import Component from '@ember/component';
-import { equal } from '@ember-decorators/object/computed';
-import { layout } from '@ember-decorators/component';
+import { equal } from '@ember/object/computed';
 import { assert } from '@ember/debug';
-
-// @ts-ignore: Ignore import of compiled template
 import template from '../templates/components/square-payment-form-styled';
-import { computed, action } from '@ember-decorators/object';
+import { computed } from '@ember/object';
 
-enum SquarePaymentFormStyledStyles {
-  light = 'light',
-  dark = 'dark'
-}
+const SquarePaymentFormStyledStyles = {
+  light: 'light',
+  dark: 'dark'
+};
 
-const PAYMENT_FORM_BASE_INPUT_STYLE: SqPaymentFormInputStyle = {
+const PAYMENT_FORM_BASE_INPUT_STYLE = {
   backgroundColor: 'transparent',
   fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
   fontWeight: '400',
@@ -23,15 +20,15 @@ const PAYMENT_FORM_BASE_INPUT_STYLE: SqPaymentFormInputStyle = {
   _mozOsxFontSmoothing: 'grayscale'
 };
 
-const LIGHT_PAYMENT_FORM_INPUT_STYLES: SqPaymentFormInputStyle[] = [
-  Object.assign({}, PAYMENT_FORM_BASE_INPUT_STYLE, <SqPaymentFormInputStyle> {
+const LIGHT_PAYMENT_FORM_INPUT_STYLES = [
+  Object.assign({}, PAYMENT_FORM_BASE_INPUT_STYLE, {
     color: '#000000',
     placeholderColor: '#CCCCCC'
   })
 ];
 
-const DARK_PAYMENT_FORM_INPUT_STYLES: SqPaymentFormInputStyle[] = [
-  Object.assign({}, PAYMENT_FORM_BASE_INPUT_STYLE, <SqPaymentFormInputStyle> {
+const DARK_PAYMENT_FORM_INPUT_STYLES = [
+  Object.assign({}, PAYMENT_FORM_BASE_INPUT_STYLE, {
     color: '#ffffff',
     placeholderColor: '#5C6B7D'
   })
@@ -58,20 +55,23 @@ const DARK_PAYMENT_FORM_INPUT_STYLES: SqPaymentFormInputStyle[] = [
  * **Example: Basic Payment Form**
  *
  * ```hbs
- * <SquarePaymentFormStyled
- *   @acceptCreditCards={{true}}
- *   @applicationId="my-app-id"
- *   @locationId="my-location-id"
- *   @onCardNonceResponseReceived={{action "handleCardNonce"}}
- * />
+ * {{square-payment-form-styled
+ *   acceptCreditCards=true
+ *   applicationId="my-app-id"
+ *   locationId="my-location-id"
+ *   onCardNonceResponseReceived=(action "handleCardNonce")
+ * }}
  * ```
+ *
+ * @class SquarePaymentFormStyled
  */
-@layout(template)
-export default class SquarePaymentFormStyled extends Component {
+export default Component.extend({
+  layout: template,
+
   /**
    * Toggles "Pay with Apple Pay" button.
    *
-   * The Apple Pay button will only show if all of the following are true:
+   * Note: The Apple Pay button will only show if all of the following are true:
    *
    * - This flag is enabled
    * - Customer is using the Safari web browser
@@ -79,45 +79,23 @@ export default class SquarePaymentFormStyled extends Component {
    * - You're using production credentials for the Square Payment Form
    * - You've provided a payment request creation callback
    * - You've provided a card nonce received callback
-   * - You've verified your domain for Apple Pay in the [Square Developer Dashboard](https://connect.squareup.com)
+   * - You've verified your domain for Apple Pay in the [Square Developer Dashboard](https://developer.squareup.com/apps)
    *
-   * **Example: Enable Apple Pay**
-   *
-   * ```hbs
-   * <SquarePaymentFormStyled
-   *   @acceptApplePay={{true}}
-   *
-   *   @applicationId="my-app-id"
-   *   @locationId="my-location-id"
-   *
-   *   @createPaymentRequest={{action "createPaymentRequest"}}
-   *   @onCardNonceResponseReceived={{action "handleCardNonce"}}
-   * />
-   *
-   * {{!-- or, if on < Ember 3.4 --}}
-   *
-   * {{square-payment-form-styled
-   *   acceptApplePay=true
-   *
-   *   applicationId="my-app-id"
-   *   locationId="my-location-id"
-   *
-   *   createPaymentRequest=(action "createPaymentRequest")
-   *   onCardNonceResponseReceived=(action "handleCardNonce")
-   * }}
-   * ```
+   * @argument acceptApplePay
+   * @type Boolean
+   * @default false
    */
-  acceptApplePay = false;
+  acceptApplePay: false,
 
   /**
    * Toggles visibility of credit card fields (credit card number, expiration date, CVV, and postal code).
    */
-  acceptCreditCards = false;
+  acceptCreditCards: false,
 
   /**
    * Toggles "Pay with Google Pay" button
    *
-   * The Google Pay button will only show if all of the following are true:
+   * Note: The Google Pay button will only show if all of the following are true:
    *
    * - This flag is enabled
    * - Your site is served with HTTPS
@@ -125,87 +103,47 @@ export default class SquarePaymentFormStyled extends Component {
    * - You've provided a payment request creation callback
    * - You've provided a card nonce received callback
    *
-   * **Example: Enable Google Pay**
-   *
-   * ```hbs
-   * <SquarePaymentFormStyled
-   *   @acceptGooglePay={{true}}
-   *
-   *   @applicationId="my-app-id"
-   *   @locationId="my-location-id"
-   *
-   *   @createPaymentRequest={{action "createPaymentRequest"}}
-   *   @onCardNonceResponseReceived={{action "handleCardNonce"}}
-   * />
-   *
-   * {{!-- or, if on < Ember 3.4 --}}
-   *
-   * {{square-payment-form-styled
-   *   acceptGooglePay=true
-   *
-   *   applicationId="my-app-id"
-   *   locationId="my-location-id"
-   *
-   *   createPaymentRequest=(action "createPaymentRequest")
-   *   onCardNonceResponseReceived=(action "handleCardNonce")
-   * }}
-   * ```
+   * @argument acceptGooglePay
+   * @type Boolean
+   * @default false
    */
-  acceptGooglePay = false;
+  acceptGooglePay: false,
 
   /**
    * Toggles "Pay with Masterpass" button
    *
-   * The Masterpass button will only show if all of the following are true:
+   * Note: The Masterpass button will only show if all of the following are true:
    *
    * - This flag is enabled
    * - Your site is served with HTTPS
+   * - You're using production credentials for the Square Payment Form
    * - You've provided a payment request creation callback
    * - You've provided a card nonce received callback
    *
-   * **Example: Enable Masterpass**
-   *
-   * ```hbs
-   * <SquarePaymentFormStyled
-   *   @acceptMasterpass={{true}}
-   *
-   *   @applicationId="my-app-id"
-   *   @locationId="my-location-id"
-   *
-   *   @createPaymentRequest={{action "createPaymentRequest"}}
-   *   @onCardNonceResponseReceived={{action "handleCardNonce"}}
-   * />
-   *
-   * {{!-- or, if on < Ember 3.4 --}}
-   *
-   * {{square-payment-form-styled
-   *   acceptMasterpass=true
-   *
-   *   applicationId="my-app-id"
-   *   locationId="my-location-id"
-   *
-   *   createPaymentRequest=(action "createPaymentRequest")
-   *   onCardNonceResponseReceived=(action "handleCardNonce")
-   * }}
-
-   * ```
+   * @argument acceptMasterpass
+   * @type Boolean
+   * @default false
    */
-  acceptMasterpass = false;
+  acceptMasterpass: false,
 
   /**
    * Text to put inside of the "Charge" button, which is present when
    * credit cards are accepted.
    *
-   * **Default Value**: "Pay with Card"
+   * @argument digitalWalletsDividerText
+   * @type String
+   * @default Pay with Card
    */
-  creditCardPayButtonText = "Pay with Card"
+  creditCardPayButtonText: 'Pay with Card',
 
   /**
    * Text to put inside of the divider present when digital wallets are enabled.
    *
-   * **Default Value**: "Or"
+   * @argument digitalWalletsDividerText
+   * @type String
+   * @default Or
    */
-  digitalWalletsDividerText = "Or";
+  digitalWalletsDividerText: 'Or',
 
   /**
    * What style colors to use for the Payment Form.
@@ -214,8 +152,12 @@ export default class SquarePaymentFormStyled extends Component {
    * | ------- | ---------------------------- |
    * | `light` | For use on light backgrounds |
    * | `dark` | For use on dark backgrounds  |
+   *
+   * @argument style
+   * @type String
+   * @default light
    */
-  style = SquarePaymentFormStyledStyles.light;
+  style: SquarePaymentFormStyledStyles.light,
 
   /**
    * **Required**: callback that gets fired when a nonce is received from the SqPaymentForm JS library.
@@ -317,8 +259,12 @@ export default class SquarePaymentFormStyled extends Component {
    * | label  | string | A short title for this shipping option. Shown in the Apple Pay interface                        |
    * | amount | string | The cost of this shipping option as a string representation of a float. The value can be "0.00" |
    *
+   * @action
+   * @argument onCardNonceResponseReceived
+   * @type Action
+   * @required
    */
-  onCardNonceResponseReceived?: SqPaymentFormCallbackOnCardNonceResponseReceived;
+  onCardNonceResponseReceived: null,
 
   /**
    * **Required for Digital Wallets**: callback that gets fired when a digital wallet button is pressed.
@@ -409,8 +355,11 @@ export default class SquarePaymentFormStyled extends Component {
    * | amount  | string  | The cost of the object as a string representation of a float with 2 decimal places. (e.g., "15.00"). For a line item, this is typically the cost of the object, a subtotal, or additional charge (e.g., taxes, shipping). For the total field, this is the total charge of the transaction and should equal the sum of the line item amounts. |
    * | pending | boolean | Optional. A boolean indicating whether or not the value in the amount field represents an estimated or unknown cost. Typically, this field is false. |
    *
+   * @action
+   * @argument createPaymentRequest
+   * @type Action
    */
-  createPaymentRequest?: () => SqPaymentFormPaymentRequest;
+  createPaymentRequest: null,
 
   /**
    * Callback that gets fired when a customer selects a new shipping address in a Apple Pay.
@@ -524,11 +473,11 @@ export default class SquarePaymentFormStyled extends Component {
    * | `amount`  | string  | The cost of the object as a string representation of a float with 2 decimal places. (e.g., "15.00"). For a line item, this is typically the cost of the object, a subtotal, or additional charge (e.g., taxes, shipping). For the total field, this is the total charge of the transaction and should equal the sum of the line item amounts. |
    * | `pending` | boolean | Optional. A boolean indicating whether or not the value in the amount field represents an estimated or unknown cost. Typically, this field is false. |
    *
+   * @action
+   * @argument onCardNonceResponseReceived
+   * @type Action
    */
-  shippingContactChanged?: (
-    shippingContact: SqPaymentFormContact,
-    done: (update: SqPaymentFormPaymentDetailsUpdate) => void
-  ) => void;
+  shippingContactChanged: null,
 
   /**
    * Callback that gets fired when a customer selects a new shipping option in Apple Pay.
@@ -592,54 +541,52 @@ export default class SquarePaymentFormStyled extends Component {
    * | `total`                 | LineItem         | Optional. Change the total amount of the transaction |
    * | `lineItems`             | LineItem[]       | Optional. To update the line items - most common updates are to add the cost of shipping and the sales tax based on the buyer’s shipping address. |
    *
+   * @action
+   * @argument shippingOptionChanged
+   * @type Action
    */
-  shippingOptionChanged?: (
-    shippingContact: SqPaymentFormContact,
-    done: (update: SqPaymentFormPaymentDetailsUpdate) => void
-  ) => void;
+  shippingOptionChanged: null,
 
   // ADDON INTERNALS
 
-  env?: string;
+  env: null,
 
   /**
    * Boolean computed property that checks if the style property is set to "light".
    * @private
    */
-  @equal('style', 'light') isStyleLight!: boolean;
+  isStyleLight: equal('style', 'light'),
 
   /**
    * Determines whether to use the light payment form input styles or dark payment form input styles
    * that get passed directly to the Square Payment Form component.
    * @private
    */
-  @computed('isStyleLight')
-  get styledFormInputStyles() {
+  styledFormInputStyles: computed('isStyleLight', function() {
     return this.isStyleLight ? LIGHT_PAYMENT_FORM_INPUT_STYLES : DARK_PAYMENT_FORM_INPUT_STYLES;
-  }
+  }),
 
   /**
    * Checks if the form is to configured to accept any digital wallet payment methods
    * @private
    */
-  @computed('acceptApplePay', 'acceptGooglePay', 'acceptMasterpass')
-  get acceptDigitalWallets() {
+  acceptDigitalWallets: computed('acceptApplePay', 'acceptGooglePay', 'acceptMasterpass', function() {
     return this.acceptApplePay || this.acceptGooglePay || this.acceptMasterpass;
-  }
+  }),
 
   /**
    * Action that does nothing. Used for null callback values.
    * @private
    */
-  @action
-  doNothing() {}
+  actions: {
+    doNothing() {}
+  },
 
   /**
    * Runs assertions to make sure that at least one payment method is enabled.
    * @private
    */
-  didReceiveAttrs(...args: any[]) {
-    this._super(...args)
+  didReceiveAttrs() {
     assert(
       'Must accept Apple Pay, credit cards, Google Pay, or Masterpass when using the Square Styled Payment Form',
       this.acceptApplePay || this.acceptCreditCards || this.acceptGooglePay || this.acceptMasterpass
@@ -650,4 +597,4 @@ export default class SquarePaymentFormStyled extends Component {
       (!this.acceptApplePay && !this.acceptGooglePay && !this.acceptMasterpass) || !!this.createPaymentRequest
     );
   }
-};
+});

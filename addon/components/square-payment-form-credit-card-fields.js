@@ -1,8 +1,5 @@
 import Component from '@ember/component';
-import { layout, attribute } from '@ember-decorators/component';
-import { computed } from '@ember-decorators/object';
-
-// @ts-ignore: Ignore import of compiled template
+import { computed } from '@ember/object';
 import template from '../templates/components/square-payment-form-credit-card-fields';
 
 /**
@@ -11,29 +8,6 @@ import template from '../templates/components/square-payment-form-credit-card-fi
  * **Example: Build a Credit Card Form**
  *
  * ```hbs
- * <SquarePaymentForm as |PaymentForm|>
- *   <PaymentForm.CreditCardFields as |Fields|>
- *     <div>
- *       <label>Card Number</label>
- *       <Fields.NumberInput>
- *     </div>
- *     <div>
- *       <label>Expiration</label>
- *       <Fields.ExpirationDateInput/>
- *     </div>
- *     <div>
- *       <label>CVV</label>
- *       <Fields.CvvInput/>
- *     </div>
- *     <div>
- *       <label>Postal</label>
- *       <Fields.PostalCodeInput/>
- *     </div>
- *   </PaymentForm.CreditCardFields/>
- * </SquarePaymentForm>>
- *
- * {{!-- or, if you're using < Ember 3.4 --}}
- *
  * {{#square-payment-form as |PaymentForm|}}
  *   {{#PaymentForm.CreditCardFields as |Fields|}}
  *     <div>
@@ -61,25 +35,27 @@ import template from '../templates/components/square-payment-form-credit-card-fi
  * @yield {SquarePaymentFormCreditCardExpirationDateInput} Fields.ExpirationDateInput
  * @yield {SquarePaymentFormCreditCardNumberInput} Fields.NumberInput
  * @yield {SquarePaymentFormCreditCardPostalCodeInput} Fields.PostalCodeInput
+ *
+ * @class SquarePaymentFormCreditCardFields
  */
-@layout(template)
-export default class SquarePaymentFormCreditCardFields extends Component {
+export default Component.extend({
+  attributeBindings: ['uniqueFieldsIdentifier:id'],
+  layout: template,
+
   /**
    * Passed down unique identifier for the current Square Payment Form; used to prevent
    * render multiple Payment Forms in a single document without running into duplicate
    * DOM IDs.
    * @private
    */
-  formId!: string;
+  formId: null,
 
   /**
    * Generated HTML ID referenced by the parent Payment Form component to reference an
    * instance of this input.
    * @private
    */
-  @attribute('id')
-  @computed('formId')
-  get uniqueFieldsIdentifier() {
+  uniqueFieldsIdentifier: computed('formId', function() {
     return `sq-${this.formId}-credit-card-fields`;
-  }
-};
+  })
+});
