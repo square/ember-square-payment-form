@@ -37,37 +37,6 @@
   </SquarePaymentForm>
 </div>
 {{#docs-snippet name="unstyled-payment-form.hbs"}}
-  <SquarePaymentForm
-    @applicationId="square-app-id"
-    @locationId="square-location-id"
-    @onCardNonceResponseReceived={{action "handleCardNonceResponse"}}
-    as |PaymentForm|
-  >
-    <PaymentForm.CreditCardFields as |Fields|>
-      <div>
-        <label>Card Number</label>
-        <Fields.NumberInput/>
-      </div>
-
-      <div>
-        <label>Expiration</label>
-        <Fields.ExpirationDateInput/>
-      </div>
-
-      <div>
-        <label>CVV</label>
-        <Fields.CvvInput/>
-      </div>
-
-      <div>
-        <label>Postal Code</label>
-        <Fields.PostalCodeInput/>
-      </div>
-    </PaymentForm.CreditCardFields>
-  </SquarePaymentForm>
-
-  {{!- Or, if you're using < Ember 3.4 }}
-
   {{#square-payment-form
     applicationId="square-app-id"
     locationId="square-location-id"

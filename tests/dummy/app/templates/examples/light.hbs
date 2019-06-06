@@ -15,22 +15,6 @@
   />
 </div>
 {{#docs-snippet name="styled-payment-form-light.hbs"}}
-  <SquarePaymentFormStyled
-    @acceptApplePay={{true}}
-    @acceptCreditCards={{true}}
-    @acceptGooglePay={{true}}
-    @acceptMasterpass={{true}}
-
-    @applicationId="square-app-id"
-    @locationId="square-location-id"
-    @style="light"
-
-    @createPaymentRequest={{action "handlePaymentRequest"}}
-    @onCardNonceResponseReceived={{action "handleCardNonceResponse"}}
-  />
-
-  {{!-- Or, if you're using < Ember 3.4 --}}
-
   {{square-payment-form-styled
     acceptApplePay=true
     acceptCreditCards=true

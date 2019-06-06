@@ -1,12 +1,9 @@
 import Component from '@ember/component';
 import { scheduleOnce } from '@ember/runloop';
 import randomId from '../utils/random-id';
-
-// @ts-ignore: Ignore import of compiled template
 import template from '../templates/components/square-payment-form';
-import { layout } from '@ember-decorators/component';
 import { assert } from '@ember/debug';
-import { computed, action } from '@ember-decorators/object';
+import { computed } from '@ember/object';
 
 /**
  * Creates a Square Payment Form and yields form inputs to use inside of it.
@@ -28,34 +25,6 @@ import { computed, action } from '@ember-decorators/object';
  * This is a basic usage of the form, without digital wallets:
  *
  * ```hbs
- * <SquarePaymentForm
- *   @applicationId="square-app-id"
- *   @locationId="square-location-id"
- *   @onCardNonceResponseReceived={{action "handleCardNonceRespone"}}
- *   as |PaymentForm|
- * >
- *   <PaymentForm.CreditCardFields as |Fields|>
- *     <div>
- *       <label>Card Number</label>
- *       <Fields.NumberInput>
- *     </div>
- *     <div>
- *       <label>Expiration</label>
- *       <Fields.ExpirationDateInput/>
- *     </div>
- *     <div>
- *       <label>CVV</label>
- *       <Fields.CvvInput/>
- *     </div>
- *     <div>
- *       <label>Postal</label>
- *       <Fields.PostalCodeInput/>
- *     </div>
- *   </PaymentForm.CreditCardFields/>
- * </SquarePaymentForm>>
- *
- * {{!-- or, if you're using < Ember 3.4 --}}
- *
  * {{#square-payment-form
  *   applicationId="square-app-id"
  *   locationId="square-location-id"
@@ -88,36 +57,49 @@ import { computed, action } from '@ember-decorators/object';
  * @class SquarePaymentForm
  * @yield {Hash} PaymentForm
  * @yield {SquarePaymentFormApplePayButton} PaymentForm.ApplePayButton
- * @yield {SquarePaymentFormCreditCardFields} PaymentForm.ApplePayButton
- * @yield {SquarePaymentFormGooglePayButton} PaymentForm.ApplePayButton
- * @yield {SquarePaymentFormMasterpassButton} PaymentForm.ApplePayButton
+ * @yield {SquarePaymentFormCreditCardFields} PaymentForm.CreditCardFields
+ * @yield {SquarePaymentFormGooglePayButton} PaymentForm.GooglePayButton
+ * @yield {SquarePaymentFormMasterpassButton} PaymentForm.MasterpassButton
  * @yield {boolean} PaymentForm.canShowApplePay
  * @yield {boolean} PaymentForm.canShowDigitalWallets
  * @yield {boolean} PaymentForm.canShowMasterpass
  * @yield {Action} PaymentForm.requestCardNonce
  */
-@layout(template)
-export default class SquarePaymentForm extends Component {
+export default Component.extend({
+  layout: template,
+
   // REQUIRED PARAMETERS
 
   /**
    * **Required**: ID of your Square application, found in the [Square Developer Dashboard](https://connect.squareup.com/apps).
+   *
+   * @argument applicationId
+   * @type String
+   * @required
    */
-  applicationId!: string;
+  applicationId: null,
 
   /**
    * **Required**: ID of the Square location transactions made with this form should be
    * attributed to; you can find this in the locations tab of your app on the
    * [Square Developer Dashboard](https://connect.squareup.com/apps).
+   *
+   * @argument locationId
+   * @type String
+   * @required
    */
-  locationId!: string;
+  locationId: null,
 
   // OPTIONAL PARAMETERS
 
   /**
    * Class to add to all Payment Form input wrappers; default is "sq-input"
+   *
+   * @argument inputClass
+   * @type String
+   * @default square-payment-form-input
    */
-  inputClass = 'square-payment-form-input';
+  inputClass: 'square-payment-form-input',
 
   /**
    * An array CSS styles formatted as JS objects, where the styles at the
@@ -154,8 +136,12 @@ export default class SquarePaymentForm extends Component {
    *
    * You can also view the set of permitted styles on
    * [Square's technical reference](https://docs.connect.squareup.com/api/paymentform#datatype-inputstyleobjects).
+   *
+   * @argument inputStyles
+   * @type Object
    */
-  inputStyles = [
+  // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
+  inputStyles: [
     {
       fontSize: '16px',
       fontFamily: '"Helvetica Neue", "Helvetica", sans-serif',
@@ -167,7 +153,7 @@ export default class SquarePaymentForm extends Component {
       _webkitFontSmoothing: 'antialiased',
       _mozOsxFontSmoothing: 'grayscale'
     }
-  ];
+  ],
 
   /**
    * **Required**: callback that gets fired when a nonce is received from the SqPaymentForm JS library.
@@ -269,8 +255,11 @@ export default class SquarePaymentForm extends Component {
    * | label  | string | A short title for this shipping option. Shown in the Apple Pay interface                        |
    * | amount | string | The cost of this shipping option as a string representation of a float. The value can be "0.00" |
    *
+   * @argument onCardNonceResponseReceived
+   * @type Action
+   * @required
    */
-  onCardNonceResponseReceived?: SqPaymentFormCallbackOnCardNonceResponseReceived;
+  onCardNonceResponseReceived: null,
 
   /**
    * **Required for Digital Wallets**: callback that gets fired when a digital wallet button is pressed.
@@ -361,8 +350,10 @@ export default class SquarePaymentForm extends Component {
    * | amount  | string  | The cost of the object as a string representation of a float with 2 decimal places. (e.g., "15.00"). For a line item, this is typically the cost of the object, a subtotal, or additional charge (e.g., taxes, shipping). For the total field, this is the total charge of the transaction and should equal the sum of the line item amounts. |
    * | pending | boolean | Optional. A boolean indicating whether or not the value in the amount field represents an estimated or unknown cost. Typically, this field is false. |
    *
+   * @argument createPaymentRequest
+   * @type Action
    */
-  createPaymentRequest?: () => SqPaymentFormPaymentRequest;
+  createPaymentRequest: null,
 
   /**
    * Callback that gets fired when a customer selects a new shipping address in a Apple Pay.
@@ -476,11 +467,10 @@ export default class SquarePaymentForm extends Component {
    * | `amount`  | string  | The cost of the object as a string representation of a float with 2 decimal places. (e.g., "15.00"). For a line item, this is typically the cost of the object, a subtotal, or additional charge (e.g., taxes, shipping). For the total field, this is the total charge of the transaction and should equal the sum of the line item amounts. |
    * | `pending` | boolean | Optional. A boolean indicating whether or not the value in the amount field represents an estimated or unknown cost. Typically, this field is false. |
    *
+   * @argument shippingContactChanged
+   * @type Action
    */
-  shippingContactChanged?: (
-    shippingContact: SqPaymentFormContact,
-    done: (update: SqPaymentFormPaymentDetailsUpdate) => void
-  ) => void;
+  shippingContactChanged: null,
 
   /**
    * Callback that gets fired when a customer selects a new shipping option in Apple Pay.
@@ -544,78 +534,76 @@ export default class SquarePaymentForm extends Component {
    * | `total`                 | LineItem         | Optional. Change the total amount of the transaction |
    * | `lineItems`             | LineItem[]       | Optional. To update the line items - most common updates are to add the cost of shipping and the sales tax based on the buyer’s shipping address. |
    *
+   * @argument shippingOptionChanged
+   * @type Action
    */
-   shippingOptionChanged?: (
-     shippingContact: SqPaymentFormContact,
-     done: (update: SqPaymentFormPaymentDetailsUpdate) => void
-   ) => void;
+   shippingOptionChanged: null,
 
   // COMPONENT INTERNALS
 
-  env?: string;
+  env: null,
 
   /**
    * Used to determine if Apple Pay is supported in the current environment.
    * @private
    */
-  canShowApplePay = false;
+  canShowApplePay: false,
 
   /**
    * Used to determine if Apple Pay is supported in the current environment.
    * @private
    */
-  canShowGooglePay = false;
+  canShowGooglePay: false,
 
   /**
    * Used to determine if Apple Pay is supported in the current environment.
    * @private
    */
-  canShowMasterpass = false;
+  canShowMasterpas: false,
 
   /**
    * Checks if the form is to configured to accept any digital wallet payment methods
    * @private
    */
-  @computed('canShowApplePay', 'canShowGooglePay', 'canShowMasterpass')
-  get canShowDigitalWallets() {
+  canShowDigitalWallets: computed('canShowApplePay', 'canShowGooglePay', 'canShowMasterpass', function() {
     return this.canShowApplePay || this.canShowGooglePay || this.canShowMasterpass;
-  }
+  }),
 
   /**
    * Internal field that maintains the randomly generated form ID for inputs
    * associated with an instance of the payment form.
    * @private
    */
-  formId?: string;
+  formId: null,
 
   /**
    * Internal field that maintains the ID of the last used application and makes
    * sure that the form is rebuilt if it changes.
    * @private
    */
-  oldApplicationId?: string;
+  oldApplicationId: null,
 
   /**
    * Internal field that maintains the ID of the last used location and makes
    * sure that the form is rebuilt if it changes.
    * @private
    */
-  oldLocationId?: string;
+  oldLocationId: null,
 
   /**
    * Internal field that maintains a reference to the current SqPaymentForm
    * instance that the component has built.
    * @private
    */
-  paymentForm?: SqPaymentForm;
+  paymentForm: null,
 
-  constructor(...args:any[]) {
-    super(...args);
+  init(...args) {
+    this._super(...args);
 
     // Generate a random ID to allow multiple uses of the component on
     // the same page without running into any conflicts.
     this.set('formId', randomId());
-  }
+  },
 
   /**
    * @private
@@ -639,12 +627,12 @@ export default class SquarePaymentForm extends Component {
       oldApplicationId: this.applicationId,
       oldLocationId: this.locationId
     });
-  }
+  },
 
   /**
    * @private
    */
-  willDestroyElement(...args:any[]) {
+  willDestroyElement(...args) {
     this._super(...args);
 
     // Clear old location state
@@ -652,7 +640,7 @@ export default class SquarePaymentForm extends Component {
 
     // Cleanup the form when the component is no longer on screen.
     this.teardownPaymentForm();
-  }
+  },
 
   /**
    * @private
@@ -661,10 +649,9 @@ export default class SquarePaymentForm extends Component {
     // If there is an existing form (possibly due to runloop effects),
     // tear it down and clear the current state.
     this.teardownPaymentForm();
-    console.log(this.env)
-
-    const paymentFormConfig: SqPaymentFormConfiguration = {
+    const paymentFormConfig = {
       applicationId: this.applicationId,
+      apiWrapper: 'emberjs',
       autoBuild: false,
       env: this.env,
       inputClass: this.inputClass,
@@ -692,7 +679,7 @@ export default class SquarePaymentForm extends Component {
           }
         }
       }
-    }
+    };
 
     if (document.getElementById(`sq-${this.formId}-credit-card-fields`)) {
       const creditCardNumberInputEl = document.getElementById(`sq-${this.formId}-credit-card-number-input`);
@@ -771,7 +758,7 @@ export default class SquarePaymentForm extends Component {
     const newPaymentForm = new SqPaymentForm(paymentFormConfig);
     this.set('paymentForm', newPaymentForm);
     newPaymentForm.build();
-  }
+  },
 
   /**
    * Checks to see if there is an existing payment form, and if so, removes
@@ -787,14 +774,15 @@ export default class SquarePaymentForm extends Component {
     }
 
     return undefined;
-  }
+  },
 
-  /**
-   * Tells the SqPaymentForm library to generate a card nonce.
-   * @private
-   */
-  @action
-  requestCardNonce() {
-    this.paymentForm && this.paymentForm.requestCardNonce();
+  actions: {
+    /**
+     * Tells the SqPaymentForm library to generate a card nonce.
+     * @private
+     */
+    requestCardNonce() {
+      this.paymentForm && this.paymentForm.requestCardNonce();
+    }
   }
-};
+});

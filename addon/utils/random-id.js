@@ -8,7 +8,7 @@ const PREFIX_TRIM_LENGTH = 2;
  *
  * @returns {string} random ASCII string
  */
-export default function randomId(): string {
+export default function randomId() {
   return Math
     .random()
     .toString(ALPHABET_SIZE)
