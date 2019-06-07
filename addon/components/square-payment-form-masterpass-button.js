@@ -38,6 +38,7 @@ export default Component.extend({
   classNames: [
     'square-payment-form__masterpass-button'
   ],
+  tagName: 'button',
 
   // ADDON INTERNALS
 
