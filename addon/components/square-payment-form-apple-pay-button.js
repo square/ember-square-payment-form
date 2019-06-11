@@ -56,7 +56,7 @@ export const ApplePayStyles = {
 export default Component.extend({
   attributeBindings: [
     'uniqueApplePayId:id',
-    'label:aria-label'
+    'lang'
   ],
   classNames: [
     'square-payment-form__apple-pay-button'
@@ -69,14 +69,14 @@ export default Component.extend({
   tagName: 'button',
 
   /**
-   * HTML language code to set on the button.
+   * Apple language code to set on the button.
    *
-   * **Default Value**: `en-US`
+   * **Default Value**: `us`
    *
    * **Example: Render an Apple Pay button in French for Canadians**
    * ```hbs
    * {{#square-payment-form as |PaymentForm|}}
-   *   {{PaymentForm.ApplePayButton lang="fr-CA"}}
+   *   {{PaymentForm.ApplePayButton lang="fr_CA"}}
    * {{/square-payment-form}}
    * ```
    * *Note: you'll need to configure the SquarePaymentForm to implement Apple Pay;*
@@ -85,7 +85,7 @@ export default Component.extend({
    * @argument lang
    * @type string
    */
-  lang: 'en-US',
+  lang: 'us',
 
   /**
    * Color style for the Apple Pay button, per [Apple's documentation](https://developer.apple.com/documentation/apple_pay_on_the_web/displaying_apple_pay_buttons).
@@ -152,12 +152,6 @@ export default Component.extend({
 
   ////////////////////////////////////////////////
   // ADDON INTERNALS
-
-  /**
-   * Adds an ARIA label to describe the button since there's no text for a screenreader to use.
-   * @private
-   */
-  label: 'Pay with Apple Pay',
 
   /**
    * Generates a BEM-compliant CSS class to hide Apple Pay when it's not supported.
