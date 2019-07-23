@@ -718,6 +718,8 @@ export default Component.extend({
           elementId: `sq-${this.formId}-credit-card-postal-code-input`,
           placeholder: creditCardPostalCodeInputEl.dataset.placeholder
         };
+      } else {
+        paymentFormConfig.postalCode = false;
       }
     }
 
