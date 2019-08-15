@@ -4,7 +4,7 @@ To help you get started, we've made 3 examples of how to use the Square Payment 
 in your app.
 
 - {{link-to "Styled Payment Form - Light Theme" "examples.light"}}
-- {{link-to "Styled Payment Form - Dark Theme" "examples.light"}}
+- {{link-to "Styled Payment Form - Dark Theme" "examples.dark"}}
 - {{link-to "Unstyled Payment Form" "examples.unstyled"}}
 
 If you're looking to get up and running quickly, we recommend you start with our styled payment form.
