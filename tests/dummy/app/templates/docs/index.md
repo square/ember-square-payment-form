@@ -52,5 +52,5 @@ charge customers.
 Take a look at our examples for inspiration:
 
 - {{link-to "Styled Payment Form - Light Theme" "examples.light"}}
-- {{link-to "Styled Payment Form - Dark Theme" "examples.light"}}
+- {{link-to "Styled Payment Form - Dark Theme" "examples.dark"}}
 - {{link-to "Unstyled Payment Form" "examples.unstyled"}}
