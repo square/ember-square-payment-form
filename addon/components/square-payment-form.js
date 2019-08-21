@@ -262,6 +262,25 @@ export default Component.extend({
   onCardNonceResponseReceived: null,
 
   /**
+   * Callback that gets fired when the SqPaymentForm has fully loaded.
+   * Use this callback to set the state of your form and fields after the SqaymentForm has fully loaded.
+   *
+   * **Example**: Mark the form as loaded to enable form submission
+   *
+   * ```js
+   * function() {
+   *   this.set('paymentFormLoaded', true);
+   * }
+   * ```
+   *
+   * Schema:
+   *
+   * @argument onPaymentFormLoaded
+   * @type Action
+   */
+  onPaymentFormLoaded: null,
+
+  /**
    * **Required for Digital Wallets**: callback that gets fired when a digital wallet button is pressed.
    * This callback returns data to show information about the payment in the Apple Pay, Google Pay,
    * and Masterpass interfaces.
@@ -661,6 +680,11 @@ export default Component.extend({
         cardNonceResponseReceived: (...args) => {
           if (this.onCardNonceResponseReceived) {
             this.onCardNonceResponseReceived(...args);
+          }
+        },
+        paymentFormLoaded: () => {
+          if (this.onPaymentFormLoaded) {
+            this.onPaymentFormLoaded();
           }
         },
         methodsSupported: methods => {
