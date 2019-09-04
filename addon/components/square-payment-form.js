@@ -4,6 +4,7 @@ import randomId from '../utils/random-id';
 import template from '../templates/components/square-payment-form';
 import { assert } from '@ember/debug';
 import { computed } from '@ember/object';
+import { simulateRequestCardNonce } from 'ember-square-payment-form/test-support';
 
 /**
  * Creates a Square Payment Form and yields form inputs to use inside of it.
@@ -578,7 +579,7 @@ export default Component.extend({
    * Used to determine if Apple Pay is supported in the current environment.
    * @private
    */
-  canShowMasterpas: false,
+  canShowMasterpass: false,
 
   /**
    * Checks if the form is to configured to accept any digital wallet payment methods
@@ -808,7 +809,11 @@ export default Component.extend({
      * @private
      */
     requestCardNonce() {
-      this.paymentForm && this.paymentForm.requestCardNonce();
+      if (Ember.testing) { // eslint-disable-line no-undef
+        simulateRequestCardNonce(this.onCardNonceResponseReceived);
+      } else {
+        this.paymentForm && this.paymentForm.requestCardNonce();
+      }
     }
   }
 });
