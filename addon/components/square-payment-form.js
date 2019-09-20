@@ -4,7 +4,14 @@ import randomId from '../utils/random-id';
 import template from '../templates/components/square-payment-form';
 import { assert } from '@ember/debug';
 import { computed } from '@ember/object';
-import { simulateRequestCardNonce } from 'ember-square-payment-form/test-support';
+
+let simulateRequestCardNonce;
+
+// eslint-disable-next-line
+if (Ember.testing) {
+  // eslint-disable-next-line no-undef
+  simulateRequestCardNonce = require('ember-square-payment-form/test-support/index').simulateRequestCardNonce;
+}
 
 /**
  * Creates a Square Payment Form and yields form inputs to use inside of it.
