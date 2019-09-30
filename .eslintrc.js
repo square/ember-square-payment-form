@@ -26,6 +26,8 @@ module.exports = {
         '.eslintrc.js',
         '.template-lintrc.js',
         'ember-cli-build.js',
+        'jest-puppeteer.config.js',
+        'jest.config.js',
         'index.js',
         'testem.js',
         'blueprints/*/index.js',
@@ -50,6 +52,20 @@ module.exports = {
       rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
         // add your custom rules and overrides for node files here
       })
+    },
+    {
+      env: {
+        jest: true,
+      },
+      files: [
+        'tests/browser/**/*.js'
+      ],
+      globals: {
+        page: true,
+        browser: true,
+        context: true,
+        jestPuppeteer: true,
+      }
     }
   ]
 };
