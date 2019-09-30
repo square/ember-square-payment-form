@@ -7,6 +7,10 @@ const Router = AddonDocsRouter.extend({
 });
 
 Router.map(function() {
+  this.route('testing', function() {
+    this.route('card-only');
+  });
+
   this.route('examples', function() {
     this.route('light');
     this.route('dark');

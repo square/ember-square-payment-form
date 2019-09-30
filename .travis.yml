@@ -46,6 +46,10 @@ jobs:
       script:
         - yarn test
 
+    - name: "End-to-End Test"
+      script:
+        - yarn browser-test
+
     # we recommend new addons test the current and previous LTS
     # as well as latest stable release (bonus points to beta/canary)
     - stage: "Additional Tests"
