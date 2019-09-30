@@ -566,6 +566,40 @@ export default Component.extend({
    */
    shippingOptionChanged: null,
 
+  /**
+   * **Required**: callback that gets fired when the buyer enters the SCA
+   * (Secure Customer Authentication) flow that's required in the UK. The
+   * callback should return an object with the following parameters:
+   *
+   * - `intent`: what you intend to do with the card; `'STORE'` a card on file,
+   *    or `'CHARGE'` a card immediately
+   * - `amount`: the decimal amount you intend to charge, if you intend to `'CHARGE'`
+   * - `currency`: the currency of the amount you intend to charge
+   * - `billingContact`: details about the customer, described as a `SqContact` object
+   * - `billingContact.givenName`: the customer's first / given name
+   *
+   * To reduce the chance of the customer being asked for information, you may provide
+   * additional information on the billingContact, such as `familyName`, `postalCode`,
+   * etc.
+   *
+   * **Example**: Sample function to send the verification details to the payment form.
+   *
+   * ```js
+   * function createVerificationDetails() {
+   *   return {
+   *     intent: 'CHARGE',
+   *     amount: '1.00',
+   *     currencyCode: 'USD',
+   *     billingContact: {
+   *       givenName: 'Jane',
+   *       familyName: 'Doe'
+   *     }
+   *   }
+   * }
+   * ```
+   */
+  createVerificationDetails: null,
+
   // COMPONENT INTERNALS
 
   env: null,
@@ -685,10 +719,33 @@ export default Component.extend({
       inputStyles: this.inputStyles,
       locationId: this.locationId,
       callbacks: {
-        cardNonceResponseReceived: (...args) => {
-          if (this.onCardNonceResponseReceived) {
-            this.onCardNonceResponseReceived(...args);
+        cardNonceResponseReceived: (errors, nonce, cardData, billingContact, shippingContact, shippingOption) => {
+          if ((errors && errors.length > 0) || !this.createVerificationDetails) {
+            return this.onCardNonceResponseReceived(
+              errors,
+              nonce,
+              cardData,
+              billingContact,
+              shippingContact,
+              shippingOption
+            )
           }
+
+          this.paymentForm.verifyBuyer(
+            nonce,
+            this.createVerificationDetails(),
+            (verificationErrors, result) => {
+              this.onCardNonceResponseReceived(
+                errors,
+                nonce,
+                cardData,
+                billingContact,
+                shippingContact,
+                shippingOption,
+                result.token
+              );
+            }
+          );
         },
         paymentFormLoaded: () => {
           if (this.onPaymentFormLoaded) {
