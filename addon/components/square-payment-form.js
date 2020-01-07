@@ -735,6 +735,8 @@ export default Component.extend({
             nonce,
             this.createVerificationDetails(),
             (verificationErrors, result) => {
+              const verificationToken = result ? result.token : null;
+
               this.onCardNonceResponseReceived(
                 errors,
                 nonce,
@@ -742,7 +744,7 @@ export default Component.extend({
                 billingContact,
                 shippingContact,
                 shippingOption,
-                result.token
+                verificationToken
               );
             }
           );

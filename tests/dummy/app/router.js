@@ -9,6 +9,7 @@ const Router = AddonDocsRouter.extend({
 Router.map(function() {
   this.route('testing', function() {
     this.route('card-only');
+    this.route('card-only-sca');
   });
 
   this.route('examples', function() {
