@@ -734,11 +734,12 @@ export default Component.extend({
           this.paymentForm.verifyBuyer(
             nonce,
             this.createVerificationDetails(),
-            (verificationErrors, result) => {
+            (verificationError, result) => {
+              const errors = verificationError ? [verificationError] : null;
               const verificationToken = result ? result.token : null;
 
               this.onCardNonceResponseReceived(
-                verificationErrors,
+                errors,
                 nonce,
                 cardData,
                 billingContact,
