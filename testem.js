@@ -2,7 +2,7 @@ const exportOptions = {
   test_page: 'tests/index.html?hidepassed',
   disable_watching: true,
   launch_in_ci: [
-    'Headless Chrome'
+    'Chrome'
   ],
   launch_in_dev: [
     'Chrome'
@@ -23,5 +23,16 @@ const exportOptions = {
     }
   }
 };
+
+if (process.env.CI) {
+  Object.assign({
+    browser_paths: {
+      Chrome: '/usr/bin/google-chrome-stable'
+    },
+    browser_exes: {
+      Chrome: 'google-chrome-stable'
+    }
+  });
+}
 
 module.exports = exportOptions;
