@@ -30,7 +30,7 @@ if (process.env.CI) {
   ];
   exportOptions.launchers = {
     CiChrome: {
-      exe: 'google-chrome-stable',
+      exe: 'google-chrome',
       args: [
         '--no-sandbox',
         '--headless',
