@@ -22,11 +22,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - uses: actions/cache@v2
-        id: cache
-        with:
-          path: ${{which google-chrome-stable}}
-          key: ${{ runner.os }}-chrome
+#       - uses: actions/cache@v2
+#         id: cache
+#         with:
+#           path: ${{which google-chrome-stable}}
+#           key: ${{ runner.os }}-chrome
 
       - name: Install Chrome
         if: steps.cache-chrome.outputs.cache-hit != 'true'
@@ -35,6 +35,7 @@ jobs:
           sudo apt-get install libxss1 libappindicator1 libindicator7
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt install ./google-chrome*.deb
+          echo "$(which google-chrome-stable)"
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.2
