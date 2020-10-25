@@ -24,15 +24,4 @@ const exportOptions = {
   }
 };
 
-if (process.env.CI) {
-  Object.assign({
-    browser_paths: {
-      Chrome: '/usr/bin/google-chrome-stable'
-    },
-    browser_exes: {
-      Chrome: 'google-chrome-stable'
-    }
-  });
-}
-
 module.exports = exportOptions;
