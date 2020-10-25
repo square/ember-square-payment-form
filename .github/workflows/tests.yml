@@ -46,15 +46,8 @@ jobs:
         with:
           cmd: install
 
-      - name: "Test?"
-        run: |
-          echo "$(which google-chrome-stable)"
-          yarn test
+      - name: Unit / Integration Tests
+        run: yarn test
 
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: test-ci
-
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: browser-test
+      - name: Browser Tests
+        run: yarn browser-test
