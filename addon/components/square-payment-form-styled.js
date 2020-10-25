@@ -547,6 +547,19 @@ export default Component.extend({
    */
   shippingOptionChanged: null,
 
+  /**
+   * Callback that gets fired whenever a buyer focuses / blurs a field, enters invalid data,
+   * changes the card brand, or changes the postal code.
+   *
+   * See the [Payment Form reference](https://developer.squareup.com/docs/api/paymentform#inputeventreceived)
+   * for a full list of events.
+   *
+   * @action
+   * @argument inputEventReceived
+   * @type Action
+   */
+  inputEventReceived: null,
+
   // ADDON INTERNALS
 
   env: null,

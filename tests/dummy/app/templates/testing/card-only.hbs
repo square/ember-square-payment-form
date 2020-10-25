@@ -4,6 +4,7 @@
   @locationId="TC4Z3ZEBKRXRH"
   @style="light"
   @onCardNonceResponseReceived={{action "handleCardNonceResponse"}}
+  @inputEventReceived={{action "handleInputEventReceived"}}
 />
 
 {{#if nonceResponse}}
@@ -16,5 +17,13 @@
     <pre class="nonce-response__shipping-contact">{{nonceResponse.shippingContact}}</pre>
     <pre class="nonce-response__shipping-option">{{nonceResponse.shippingOption}}</pre>
     <pre class="nonce-response__verification-token">{{nonceResponse.verificationToken}}</pre>
+  </div>
+{{/if}}
+
+{{#if eventData}}
+  <div class="event-data">
+    <h3>Events</h3>
+    <pre class="event-data__event-type">{{eventData.eventType}}</pre>
+    <pre class="event-data__field">{{eventData.field}}</pre>
   </div>
 {{/if}}

@@ -19,6 +19,18 @@ describe('Card-Only Payment Form', () => {
     await page.waitFor(1000);
 
     await ccInputFrame.focus('input');
+
+    // Ensure input events are bubbled properly
+    const eventTypeHandle = await page.$('.event-data__event-type');
+    await expect(
+      await eventTypeHandle.evaluate(node => node.innerText)
+    ).toMatch('focusClassAdded');
+
+    const fieldHandle = await page.$('.event-data__field');
+    await expect(
+      await fieldHandle.evaluate(node => node.innerText)
+    ).toMatch('cardNumber');
+
     await page.keyboard.type('4111 1111 1111 1111');
 
     await expDateInputFrame.focus('input');

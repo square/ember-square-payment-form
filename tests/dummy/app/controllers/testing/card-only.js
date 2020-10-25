@@ -14,6 +14,9 @@ export default Controller.extend({
         shippingOption: JSON.stringify(shippingOption, null, '  '),
         verificationToken
       });
+    },
+    handleInputEventReceived(eventData) {
+      this.set('eventData', eventData);
     }
   }
 });
