@@ -24,26 +24,4 @@ const exportOptions = {
   }
 };
 
-if (process.env.CI) {
-  exportOptions.launch_in_ci = [
-    'CiChrome'
-  ];
-  exportOptions.launchers = {
-    CiChrome: {
-      exe: 'google-chrome',
-      args: [
-        '--no-sandbox',
-        '--headless',
-        '--disable-gpu',
-        '--disable-dev-shm-usage',
-        '--disable-software-rasterizer',
-        '--mute-audio',
-        '--remote-debugging-port=0',
-        '--window-size=1440,900'
-      ],
-      protocol: 'browser'
-    }
-  };
-}
-
 module.exports = exportOptions;
