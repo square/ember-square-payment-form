@@ -1,4 +1,4 @@
-module.exports = {
+const exportOptions = {
   test_page: 'tests/index.html?hidepassed',
   disable_watching: true,
   launch_in_ci: [
@@ -23,3 +23,27 @@ module.exports = {
     }
   }
 };
+
+if (process.env.CI) {
+  exportOptions.launch_in_ci = [
+    'CiChrome'
+  ];
+  exportOptions.launchers = {
+    CiChrome: {
+      exe: 'google-chrome-stable',
+      args: [
+        '--no-sandbox',
+        '--headless',
+        '--disable-gpu',
+        '--disable-dev-shm-usage',
+        '--disable-software-rasterizer',
+        '--mute-audio',
+        '--remote-debugging-port=0',
+        '--window-size=1440,900'
+      ],
+      protocol: 'browser'
+    }
+  };
+}
+
+module.exports = exportOptions;

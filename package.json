@@ -18,6 +18,7 @@
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
+    "test-ci": "CI=true ember test",
     "test:all": "ember try:each",
     "browser-test": "ember build -dev --suppress-sizes=true && jest --runInBand"
   },
