@@ -600,6 +600,19 @@ export default Component.extend({
    */
   createVerificationDetails: null,
 
+  /**
+   * Callback that gets fired whenever a buyer focuses / blurs a field, enters invalid data,
+   * changes the card brand, or changes the postal code.
+   *
+   * See the [Payment Form reference](https://developer.squareup.com/docs/api/paymentform#inputeventreceived)
+   * for a full list of events.
+   *
+   * @action
+   * @argument inputEventReceived
+   * @type Action
+   */
+  inputEventReceived: null,
+
   // COMPONENT INTERNALS
 
   env: null,
@@ -749,6 +762,11 @@ export default Component.extend({
               );
             }
           );
+        },
+        inputEventReceived: (eventData) => {
+          if (this.inputEventReceived) {
+            this.inputEventReceived(eventData);
+          }
         },
         paymentFormLoaded: () => {
           if (this.onPaymentFormLoaded) {
