@@ -10,6 +10,7 @@ Router.map(function() {
   this.route('testing', function() {
     this.route('card-only');
     this.route('card-only-sca');
+    this.route('gift-card');
   });
 
   this.route('examples', function() {
