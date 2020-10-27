@@ -867,6 +867,15 @@ export default Component.extend({
         assert('createPaymentRequest action is required for Masterpass.', false);
       }
     }
+
+    const giftCardInputEl = document.getElementById(`sq-${this.formId}-gift-card-input`);
+    if (giftCardInputEl) {
+      paymentFormConfig.giftCard = {
+        elementId: `sq-${this.formId}-gift-card-input`,
+        placeholder: giftCardInputEl.dataset.placeholder
+      };
+    }
+
     const newPaymentForm = new SqPaymentForm(paymentFormConfig);
     this.set('paymentForm', newPaymentForm);
     newPaymentForm.build();

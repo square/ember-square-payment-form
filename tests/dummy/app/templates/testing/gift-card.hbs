@@ -1,0 +1,23 @@
+<SquarePaymentForm
+  @applicationId="sandbox-sq0idb-TsZm7fSKPzmM1HRI9zDfAQ"
+  @locationId="TC4Z3ZEBKRXRH"
+  @onCardNonceResponseReceived={{action "handleCardNonceResponse"}}
+  as |PaymentForm|>
+  <PaymentForm.GiftCardInput/>
+  <button class="pay-now-button" onclick={{action PaymentForm.requestCardNonce}}>
+    Pay Now
+  </button>
+</SquarePaymentForm>
+
+{{#if nonceResponse}}
+  <div class="nonce-response">
+    <h3>Results</h3>
+    <pre class="nonce-response__errors">{{nonceResponse.errors}}</pre>
+    <pre class="nonce-response__nonce">{{nonceResponse.nonce}}</pre>
+    <pre class="nonce-response__card-data">{{nonceResponse.cardData}}</pre>
+    <pre class="nonce-response__billing-contact">{{nonceResponse.billingContact}}</pre>
+    <pre class="nonce-response__shipping-contact">{{nonceResponse.shippingContact}}</pre>
+    <pre class="nonce-response__shipping-option">{{nonceResponse.shippingOption}}</pre>
+    <pre class="nonce-response__verification-token">{{nonceResponse.verificationToken}}</pre>
+  </div>
+{{/if}}
