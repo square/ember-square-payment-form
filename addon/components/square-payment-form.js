@@ -2,16 +2,7 @@ import Component from '@ember/component';
 import { scheduleOnce } from '@ember/runloop';
 import randomId from '../utils/random-id';
 import template from '../templates/components/square-payment-form';
-import { assert } from '@ember/debug';
 import { computed } from '@ember/object';
-
-let simulateRequestCardNonce;
-
-// eslint-disable-next-line
-if (Ember.testing) {
-  // eslint-disable-next-line no-undef
-  simulateRequestCardNonce = require('ember-square-payment-form/test-support/index').simulateRequestCardNonce;
-}
 
 /**
  * Creates a Square Payment Form and yields form inputs to use inside of it.
@@ -683,9 +674,6 @@ export default Component.extend({
    * @private
    */
   didReceiveAttrs() {
-    assert('applicationId is required to build the Square Payment Form', !!this.applicationId);
-    assert('locationId is required to build the Square Payment Form', !!this.locationId);
-
     const applicationIdChanged = this.oldApplicationId !== this.applicationId;
     const locationIdChanged = this.oldLocationId !== this.locationId;
 
@@ -903,9 +891,7 @@ export default Component.extend({
      * @private
      */
     requestCardNonce() {
-      if (Ember.testing) { // eslint-disable-line no-undef
-        simulateRequestCardNonce(this.onCardNonceResponseReceived);
-      } else {
+      if (!Ember.testing) { // eslint-disable-line no-undef
         this.paymentForm && this.paymentForm.requestCardNonce();
       }
     }
